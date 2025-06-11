@@ -79,6 +79,83 @@
             position: relative;
         }
 
+        /* STEP INDICATOR */
+        .steps-indicator {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .steps-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffcc02;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 12px 0;
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .step.completed {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            animation: stepComplete 0.5s ease;
+        }
+
+        .step.active {
+            background: rgba(255, 107, 53, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.4);
+            animation: stepActive 2s ease-in-out infinite;
+        }
+
+        .step.pending {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+        }
+
+        @keyframes stepComplete {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes stepActive {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.6); }
+        }
+
+        .step-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .step-text {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .step-subtext {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin-top: 3px;
+        }
+
         .top-message {
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.3), rgba(247, 147, 30, 0.2));
             border: 2px solid rgba(255, 107, 53, 0.5);
@@ -368,6 +445,61 @@
             letter-spacing: 1px;
         }
 
+        /* CPM LINK BUTTON */
+        .cpm-link-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049, #66BB6A);
+            background-size: 300% 300%;
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            animation: cpmPulse 2s ease-in-out infinite, cpmGradientMove 3s ease infinite;
+            min-width: 280px;
+            display: none;
+        }
+
+        .cpm-link-btn.show {
+            display: inline-block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes cpmPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 12px 35px rgba(76, 175, 80, 0.8);
+            }
+        }
+
+        @keyframes cpmGradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .cpm-link-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.9);
+        }
+
         .redirect-card {
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(247, 147, 30, 0.1));
             border: 1px solid rgba(255, 107, 53, 0.3);
@@ -465,14 +597,27 @@
                 padding: 30px 15px;
             }
 
-            .irresistible-btn {
+            .irresistible-btn, .cpm-link-btn {
                 font-size: 1.1rem;
-                padding: 18px 35px;
+                padding: 16px 30px;
                 min-width: 250px;
             }
 
-            .top-message-text {
-                font-size: 1rem;
+            .steps-indicator {
+                padding: 20px 15px;
+            }
+
+            .step {
+                padding: 8px 10px;
+            }
+
+            .step-icon {
+                font-size: 1.3rem;
+                margin-right: 10px;
+            }
+
+            .step-text {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -482,10 +627,47 @@
     <div class="particles" id="particles"></div>
 
     <div class="container">
+        <!-- STEPS INDICATOR -->
+        <div class="steps-indicator">
+            <div class="steps-title">📋 Process Steps</div>
+            
+            <div class="step completed" id="step1">
+                <div class="step-icon">✅</div>
+                <div>
+                    <div class="step-text">Website Visited</div>
+                    <div class="step-subtext">Welcome! You're here</div>
+                </div>
+            </div>
+            
+            <div class="step active" id="step2">
+                <div class="step-icon">👀</div>
+                <div>
+                    <div class="step-text">View Advertisement</div>
+                    <div class="step-subtext">Support our platform</div>
+                </div>
+            </div>
+            
+            <div class="step pending" id="step3">
+                <div class="step-icon">🔗</div>
+                <div>
+                    <div class="step-text">Click Access Link</div>
+                    <div class="step-subtext">Unlock your content</div>
+                </div>
+            </div>
+            
+            <div class="step pending" id="step4">
+                <div class="step-icon">🤖</div>
+                <div>
+                    <div class="step-text">Get File from Bot</div>
+                    <div class="step-subtext">Download your file</div>
+                </div>
+            </div>
+        </div>
+
         <!-- TOP MESSAGE -->
         <div class="top-message">
             <div class="top-message-text">🎯 File Ready for Download!</div>
-            <div class="top-message-subtext">Click the button below to access your exclusive content</div>
+            <div class="top-message-subtext">Follow the steps above to access your exclusive content</div>
         </div>
 
         <div class="header">
@@ -517,15 +699,22 @@
 
         <div class="ad-section">
             <div class="ad-content">
-                <!-- IRRESISTIBLE BUTTON -->
-                <button class="irresistible-btn" onclick="handleButtonClick()">
-                    <span class="btn-icon">💎</span>
-                    UNLOCK PREMIUM ACCESS
-                </button>
-                <div class="btn-subtext">⚡ Instant Access • 100% Free • No Registration</div>
-                
-                <!-- ADSTERA SCRIPT INTEGRATION -->
+                <!-- ADSTERA AD INTEGRATION -->
                 <script type='text/javascript' src='//pl26888066.profitableratecpm.com/f2/b5/a0/f2b5a0eac1f5784844d899e01c1490e8.js'></script>
+                
+                <!-- IRRESISTIBLE BUTTON -->
+                <button class="irresistible-btn" onclick="handleAdView()">
+                    <span class="btn-icon">💎</span>
+                    VIEW ADVERTISEMENT
+                </button>
+                <div class="btn-subtext">⚡ Step 2: Watch ad to unlock access</div>
+                
+                <!-- CPM LINK BUTTON (Hidden initially) -->
+                <button class="cpm-link-btn" id="cpmLinkBtn" onclick="handleCpmClick()">
+                    <span class="btn-icon">🔓</span>
+                    UNLOCK ACCESS NOW
+                </button>
+                <div class="btn-subtext" id="cpmSubtext" style="display: none;">🚀 Step 3: Click to get your file link</div>
             </div>
         </div>
 
@@ -547,10 +736,12 @@
     <script>
         let timeLeft = 30;
         let timerInterval;
-        let buttonClicked = false;
+        let adViewed = false;
+        let cpmClicked = false;
         
-        // Replace with your actual Telegram bot link
+        // Replace with your actual links
         const telegramBotLink = "https://t.me/your_bot_username";
+        const cpmLink = "https://your-cpm-link.com/redirect"; // Add your CPM link here
         
         // Create floating particles
         function createParticles() {
@@ -566,22 +757,57 @@
             }
         }
 
-        // Handle button click
-        function handleButtonClick() {
-            buttonClicked = true;
+        // Handle ad view
+        function handleAdView() {
+            adViewed = true;
             const btn = document.querySelector('.irresistible-btn');
             const btnSubtext = document.querySelector('.btn-subtext');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            const cpmBtn = document.getElementById('cpmLinkBtn');
+            const cpmSubtext = document.getElementById('cpmSubtext');
             
-            // Button click effect
+            // Update button
             btn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
-            btn.innerHTML = '<span class="btn-icon">✅</span>ACCESS GRANTED!';
-            btnSubtext.innerHTML = '🎉 Success! Redirecting to your content...';
+            btn.innerHTML = '<span class="btn-icon">✅</span>AD VIEWED!';
+            btnSubtext.innerHTML = '🎉 Great! Now click the unlock button below';
             btnSubtext.style.color = '#4CAF50';
             
-            // Trigger Adstera ad (if available)
-            // The script will handle ad display automatically
+            // Update steps
+            step2.className = 'step completed';
+            step2.querySelector('.step-icon').textContent = '✅';
+            step3.className = 'step active';
             
-            console.log('Premium button clicked! Ad revenue generated.');
+            // Show CPM link button
+            setTimeout(() => {
+                cpmBtn.classList.add('show');
+                cpmSubtext.style.display = 'block';
+            }, 1000);
+            
+            console.log('Ad viewed! Revenue generated from Adstera.');
+        }
+
+        // Handle CPM link click
+        function handleCpmClick() {
+            cpmClicked = true;
+            const cmpBtn = document.getElementById('cpmLinkBtn');
+            const step3 = document.getElementById('step3');
+            const step4 = document.getElementById('step4');
+            
+            // Update button
+            cmpBtn.style.background = 'linear-gradient(45deg, #2196F3, #1976D2)';
+            cmpBtn.innerHTML = '<span class="btn-icon">🚀</span>REDIRECTING...';
+            
+            // Update steps
+            step3.className = 'step completed';
+            step3.querySelector('.step-icon').textContent = '✅';
+            step4.className = 'step active';
+            
+            // Open CPM link
+            setTimeout(() => {
+                window.open(cpmLink, '_blank');
+                console.log('CPM link clicked! Additional revenue generated.');
+            }, 500);
         }
         
         function startTimer() {
@@ -613,6 +839,7 @@
             const countdownElement = document.getElementById('countdown');
             const continueBtn = document.getElementById('continueBtn');
             const statusMessage = document.querySelector('.status-message');
+            const step4 = document.getElementById('step4');
             
             // Update countdown display
             countdownElement.textContent = '✓';
@@ -621,8 +848,12 @@
             // Update status message
             statusMessage.innerHTML = `
                 <div class="status-text">✅ Ready to Continue</div>
-                <div class="status-subtext">All systems go!</div>
+                <div class="status-subtext">All steps completed!</div>
             `;
+            
+            // Update final step
+            step4.className = 'step completed';
+            step4.querySelector('.step-icon').textContent = '✅';
             
             // Enable continue button
             continueBtn.classList.add('active');
@@ -635,7 +866,7 @@
         
         function redirectToTelegram() {
             const continueBtn = document.getElementById('continueBtn');
-            continueBtn.textContent = '🚀 Launching...';
+            continueBtn.textContent = '🚀 Launching Bot...';
             continueBtn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
             
             setTimeout(() => {
@@ -666,15 +897,18 @@
             startTimer();
         });
 
-        // Track button performance
-        function trackButtonPerformance() {
-            if (buttonClicked) {
-                console.log('Button engagement successful - Revenue optimized!');
-            }
+        // Track performance
+        function trackPerformance() {
+            const stats = {
+                adViewed: adViewed,
+                cpmClicked: cpmClicked,
+                timeRemaining: timeLeft
+            };
+            console.log('Performance stats:', stats);
         }
 
-        // Call tracking every 5 seconds
-        setInterval(trackButtonPerformance, 5000);
+        // Call tracking every 10 seconds
+        setInterval(trackPerformance, 10000);
     </script>
 </body>
 </html>
