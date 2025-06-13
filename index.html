@@ -1,34 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Redirecting...</title>
-  <meta http-equiv="refresh" content="3;url=https://exe.io/5wR8f" />
-  <style>
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 100px;
-    }
-    h1 {
-      color: #ff5722;
-    }
-    p {
-      font-size: 18px;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Access Verification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .ad-space {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border: 2px dashed #dee2e6;
+            margin: 20px;
+            border-radius: 10px;
+        }
+        
+        .ad-space h3 {
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .verification-area {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .timer-container {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+        }
+        
+        .timer {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: white;
+            width: 0%;
+            transition: width 1s ease;
+            border-radius: 5px;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
+        }
+        
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .token-display {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: none;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+        }
+        
+        .token-code {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            word-break: break-all;
+            margin: 15px 0;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .instructions h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            text-align: left;
+            color: #424242;
+        }
+        
+        .instructions li {
+            margin: 8px 0;
+            padding-left: 10px;
+        }
+        
+        .footer-ads {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .timer {
+                font-size: 3em;
+            }
+            
+            .verification-area {
+                padding: 20px;
+            }
+        }
+        
+        .ad-banner {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            border-radius: 10px;
+            color: #8b4513;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .side-ads {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .side-ad {
+            height: 200px;
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .side-ads {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎬 Free Access Verification</h1>
+            <p>Complete verification to get your access token</p>
+        </div>
+        
+        <!-- Top Ad Space -->
+        <div class="ad-banner">
+            📢 Your Google AdSense Ad Here (728x90)
+        </div>
+        
+        <!-- Main Content -->
+        <div class="verification-area">
+            <div class="instructions">
+                <h3>📋 How to Get Your Access Token:</h3>
+                <ol>
+                    <li>Wait for the timer to complete (60 seconds)</li>
+                    <li>View all advertisements completely</li>
+                    <li>Click "Generate Access Token" button</li>
+                    <li>Copy your unique token</li>
+                    <li>Go back to Telegram bot and submit token</li>
+                </ol>
+            </div>
+            
+            <!-- Timer Section -->
+            <div class="timer-container" id="timer-section">
+                <h2>⏰ Please Wait for Verification</h2>
+                <div class="timer" id="countdown">60</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+                <p>Verifying your visit... Please don't close this page!</p>
+            </div>
+            
+            <!-- Side Ads -->
+            <div class="side-ads">
+                <div class="side-ad">
+                    📱 Your Mobile Ad Here (300x250)
+                </div>
+                <div class="side-ad">
+                    💻 Your Desktop Ad Here (300x250)
+                </div>
+            </div>
+            
+            <!-- Warning -->
+            <div class="warning" id="warning">
+                ⚠️ <strong>Important:</strong> Stay on this page for complete verification. Closing the page will restart the process.
+            </div>
+            
+            <!-- Generate Token Button -->
+            <button class="btn" id="generate-btn" disabled onclick="generateToken()">
+                🔐 Generate Access Token
+            </button>
+            
+            <!-- Token Display -->
+            <div class="token-display" id="token-area">
+                <h2>✅ Your Access Token is Ready!</h2>
+                <div class="token-code" id="token-code"></div>
+                <button class="btn" onclick="copyToken()">📋 Copy Token</button>
+                <button class="btn" onclick="openTelegram()">📱 Open Telegram Bot</button>
+                <div class="success">
+                    <strong>Next Steps:</strong>
+                    <br>1. Copy the token above
+                    <br>2. Go back to Telegram bot
+                    <br>3. Submit your token
+                    <br>4. Get 24-hour access to all content!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Middle Ad Space -->
+        <div class="ad-banner">
+            🎯 Your Video Ad or Banner Ad Here (728x90)
+        </div>
+        
+        <!-- Footer Ads -->
+        <div class="footer-ads">
+            <h3>📢 Sponsored Content</h3>
+            <div class="ad-banner">
+                💰 Your Footer Advertisement Here (728x250)
+            </div>
+        </div>
+    </div>
 
-  <!-- ✅ Adsterra Ads Script -->
-  <script type='text/javascript' src='//pl26888066.profitableratecpm.com/f2/b5/a0/f2b5a0eac1f5784844d899e01c1490e8.js'></script>
-
-  <h1>🔁 Redirecting You...</h1>
-  <p>Please wait while we redirect you to unlock the video 🔓</p>
-
+    <script>
+        // Global variables
+        let visitStartTime = Date.now();
+        let countdown = 60;
+        let adsViewed = 0;
+        let tokenGenerated = false;
+        let userToken = '';
+        
+        // Start countdown timer
+        let timerInterval = setInterval(() => {
+            countdown--;
+            document.getElementById('countdown').textContent = countdown;
+            
+            // Update progress bar
+            let progress = ((60 - countdown) / 60) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            if (countdown <= 0) {
+                clearInterval(timerInterval);
+                enableTokenGeneration();
+            }
+        }, 1000);
+        
+        // Enable token generation
+        function enableTokenGeneration() {
+            document.getElementById('generate-btn').disabled = false;
+            document.getElementById('timer-section').innerHTML = `
+                <h2>✅ Verification Complete!</h2>
+                <p style="font-size: 1.2em; margin: 20px 0;">
+                    🎉 You can now generate your access token
+                </p>
+            `;
+            document.getElementById('warning').style.display = 'none';
+            
+            // Track ad views (simulate)
+            adsViewed = 3; // Assume user viewed ads during wait time
+        }
+        
+        // Generate access token
+        function generateToken() {
+            let stayTime = Date.now() - visitStartTime;
+            
+            // Minimum stay time check (60 seconds)
+            if (stayTime < 60000) {
+                alert('⏰ Please wait for complete verification!');
+                return;
+            }
+            
+            // Generate secure token
+            let timestamp = Date.now();
+            let randomPart = Math.random().toString(36).substring(7);
+            let userAgent = navigator.userAgent.substring(0, 20);
+            let screenInfo = screen.width + 'x' + screen.height;
+            
+            // Create token string
+            let tokenData = timestamp + '_' + randomPart + '_' + screenInfo;
+            userToken = btoa(tokenData); // Base64 encode
+            
+            // Display token
+            document.getElementById('token-code').textContent = userToken;
+            document.getElementById('token-area').style.display = 'block';
+            document.getElementById('generate-btn').style.display = 'none';
+            
+            tokenGenerated = true;
+            
+            // Optional: Send token to your server for validation
+            // sendTokenToServer(userToken);
+            
+            console.log('Token generated:', userToken);
+        }
+        
+        // Copy token to clipboard
+        function copyToken() {
+            navigator.clipboard.writeText(userToken).then(() => {
+                alert('✅ Token copied to clipboard!\n\nGo back to Telegram bot and submit this token.');
+            }).catch(() => {
+                // Fallback for older browsers
+                let textArea = document.createElement('textarea');
+                textArea.value = userToken;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('✅ Token copied to clipboard!\n\nGo back to Telegram bot and submit this token.');
+            });
+        }
+        
+        // Open Telegram bot
+        function openTelegram() {
+            // Replace with your bot username
+            window.open('https://t.me/your_bot_username', '_blank');
+        }
+        
+        // Prevent page close before token generation
+        window.addEventListener('beforeunload', function(e) {
+            if (!tokenGenerated && countdown > 0) {
+                e.preventDefault();
+                e.returnValue = 'Verification in progress! Closing will restart the process.';
+            }
+        });
+        
+        // Track page visibility
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && !tokenGenerated) {
+                console.log('User switched tab during verification');
+            }
+        });
+        
+        // Simulate ad interactions
+        setTimeout(() => {
+            adsViewed++;
+            console.log('Ad interaction tracked');
+        }, 15000);
+        
+        setTimeout(() => {
+            adsViewed++;
+            console.log('Another ad interaction tracked');
+        }, 35000);
+        
+        // Optional: Send token to your server
+        function sendTokenToServer(token) {
+            // Uncomment and modify this if you want server-side validation
+            /*
+            fetch('/api/validate-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: token,
+                    timestamp: Date.now(),
+                    userAgent: navigator.userAgent
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Token sent to server:', data);
+            })
+            .catch(error => {
+                console.error('Error sending token:', error);
+            });
+            */
+        }
+        
+        // Analytics tracking (optional)
+        function trackEvent(eventName, eventData) {
+            console.log('Event:', eventName, eventData);
+            // Add your analytics code here (Google Analytics, etc.)
+        }
+        
+        // Track page load
+        trackEvent('page_load', {
+            timestamp: Date.now(),
+            userAgent: navigator.userAgent
+        });
+        
+        // Track token generation
+        function trackTokenGeneration() {
+            trackEvent('token_generated', {
+                timestamp: Date.now(),
+                stayTime: Date.now() - visitStartTime,
+                adsViewed: adsViewed
+            });
+        }
+    </script>
 </body>
 </html>
